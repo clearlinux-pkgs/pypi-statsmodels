@@ -4,7 +4,7 @@
 #
 Name     : statsmodels
 Version  : 0.9.0
-Release  : 1
+Release  : 2
 URL      : https://files.pythonhosted.org/packages/67/68/eb3ec6ab61f97216c257edddb853cc174cd76ea44b365cf4adaedcd44482/statsmodels-0.9.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/67/68/eb3ec6ab61f97216c257edddb853cc174cd76ea44b365cf4adaedcd44482/statsmodels-0.9.0.tar.gz
 Summary  : Statistical computations and models for Python
@@ -12,7 +12,6 @@ Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause Python-2.0
 Requires: statsmodels-python3
 Requires: statsmodels-license
-Requires: statsmodels-python
 Requires: Sphinx
 Requires: ipykernel
 Requires: jupyter_client
@@ -82,10 +81,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530984366
+export SOURCE_DATE_EPOCH=1530986286
 find -name "*pyx" | xargs touch ||:
 python3 setup.py build -b py3
 
+%check
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test || :
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/statsmodels
