@@ -4,7 +4,7 @@
 #
 Name     : statsmodels
 Version  : 0.9.0
-Release  : 5
+Release  : 6
 URL      : https://files.pythonhosted.org/packages/67/68/eb3ec6ab61f97216c257edddb853cc174cd76ea44b365cf4adaedcd44482/statsmodels-0.9.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/67/68/eb3ec6ab61f97216c257edddb853cc174cd76ea44b365cf4adaedcd44482/statsmodels-0.9.0.tar.gz
 Summary  : Statistical computations and models for Python
