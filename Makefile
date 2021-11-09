@@ -1,5 +1,5 @@
 PKG_NAME := statsmodels
-URL = https://files.pythonhosted.org/packages/10/26/0fd61f95667e56fd597ecca715dff3623ed1122b6f895ed2b4dfb54afc04/statsmodels-0.12.2.tar.gz
+URL = https://files.pythonhosted.org/packages/9e/5e/4a2ade283411d1f46d6f8dd5fe951b9152062d55a20750cd5d4b556322bf/statsmodels-0.13.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
