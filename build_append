@@ -1,2 +1,2 @@
-rm -f %{_builddir}/statsmodels-0.13.0/statsmodels/LICENSE.txt
-touch  %{_builddir}/statsmodels-0.13.0/statsmodels/LICENSE.txt
+rm -f %{_builddir}/statsmodels-0.13.1/statsmodels/LICENSE.txt
+touch  %{_builddir}/statsmodels-0.13.1/statsmodels/LICENSE.txt
