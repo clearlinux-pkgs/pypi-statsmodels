@@ -4,7 +4,7 @@
 #
 Name     : statsmodels
 Version  : 0.13.1
-Release  : 24
+Release  : 25
 URL      : https://files.pythonhosted.org/packages/e7/86/8c95a2f43d8d66837f52fc0a2d9b4ea491e564789ee94d28f642d9d47ebc/statsmodels-0.13.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/e7/86/8c95a2f43d8d66837f52fc0a2d9b4ea491e564789ee94d28f642d9d47ebc/statsmodels-0.13.1.tar.gz
 Summary  : Statistical computations and models for Python
@@ -20,20 +20,21 @@ BuildRequires : nose
 BuildRequires : numpy
 BuildRequires : pandas
 BuildRequires : patsy
-BuildRequires : pluggy
-BuildRequires : py-python
 BuildRequires : pypi(cython)
 BuildRequires : pypi(numpy)
 BuildRequires : pypi(pandas)
 BuildRequires : pypi(patsy)
+BuildRequires : pypi(pluggy)
+BuildRequires : pypi(py)
+BuildRequires : pypi(pytest)
 BuildRequires : pypi(scipy)
 BuildRequires : pypi(setuptools)
+BuildRequires : pypi(tox)
+BuildRequires : pypi(virtualenv)
 BuildRequires : pypi(wheel)
 BuildRequires : pytest
 BuildRequires : python-dateutil
 BuildRequires : scipy
-BuildRequires : tox
-BuildRequires : virtualenv
 
 %description
 The format for landing.json should be self-explanatory. The images should be placed in docs/source/_static/images/. They will be displayed at 360 x 225 (W x H). It's best to save them as a png with a resolution of a multiple of at least 720 x 450. If you want, you can use png crush to make the images smaller.
@@ -78,7 +79,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641321107
+export SOURCE_DATE_EPOCH=1641426374
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
