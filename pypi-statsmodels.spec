@@ -4,12 +4,14 @@
 #
 Name     : pypi-statsmodels
 Version  : 0.13.1
-Release  : 26
+Release  : 27
 URL      : https://files.pythonhosted.org/packages/e7/86/8c95a2f43d8d66837f52fc0a2d9b4ea491e564789ee94d28f642d9d47ebc/statsmodels-0.13.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/e7/86/8c95a2f43d8d66837f52fc0a2d9b4ea491e564789ee94d28f642d9d47ebc/statsmodels-0.13.1.tar.gz
 Summary  : Statistical computations and models for Python
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause
+Requires: pypi-statsmodels-filemap = %{version}-%{release}
+Requires: pypi-statsmodels-lib = %{version}-%{release}
 Requires: pypi-statsmodels-license = %{version}-%{release}
 Requires: pypi-statsmodels-python = %{version}-%{release}
 Requires: pypi-statsmodels-python3 = %{version}-%{release}
@@ -32,6 +34,24 @@ BuildRequires : pypi-virtualenv
 %description
 The format for landing.json should be self-explanatory. The images should be placed in docs/source/_static/images/. They will be displayed at 360 x 225 (W x H). It's best to save them as a png with a resolution of a multiple of at least 720 x 450. If you want, you can use png crush to make the images smaller.
 
+%package filemap
+Summary: filemap components for the pypi-statsmodels package.
+Group: Default
+
+%description filemap
+filemap components for the pypi-statsmodels package.
+
+
+%package lib
+Summary: lib components for the pypi-statsmodels package.
+Group: Libraries
+Requires: pypi-statsmodels-license = %{version}-%{release}
+Requires: pypi-statsmodels-filemap = %{version}-%{release}
+
+%description lib
+lib components for the pypi-statsmodels package.
+
+
 %package license
 Summary: license components for the pypi-statsmodels package.
 Group: Default
@@ -52,9 +72,11 @@ python components for the pypi-statsmodels package.
 %package python3
 Summary: python3 components for the pypi-statsmodels package.
 Group: Default
+Requires: pypi-statsmodels-filemap = %{version}-%{release}
 Requires: python3-core
 Provides: pypi(statsmodels)
 Requires: pypi(numpy)
+Requires: pypi(packaging)
 Requires: pypi(pandas)
 Requires: pypi(patsy)
 Requires: pypi(scipy)
@@ -66,13 +88,16 @@ python3 components for the pypi-statsmodels package.
 %prep
 %setup -q -n statsmodels-0.13.1
 cd %{_builddir}/statsmodels-0.13.1
+pushd ..
+cp -a statsmodels-0.13.1 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641588974
+export SOURCE_DATE_EPOCH=1653059319
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -80,6 +105,15 @@ export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 -m build --wheel --skip-dependency-check --no-isolation
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+python3 -m build --wheel --skip-dependency-check --no-isolation
+
+popd
 
 ## build_append content
 rm -f %{_builddir}/statsmodels-0.13.1/statsmodels/LICENSE.txt
@@ -98,9 +132,26 @@ pip install --root=%{buildroot} --no-deps --ignore-installed dist/*.whl
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+pip install --root=%{buildroot}-v3 --no-deps --ignore-installed dist/*.whl
+popd
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
+
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-pypi-statsmodels
+
+%files lib
+%defattr(-,root,root,-)
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
