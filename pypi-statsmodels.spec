@@ -4,7 +4,7 @@
 #
 Name     : pypi-statsmodels
 Version  : 0.13.1
-Release  : 32
+Release  : 33
 URL      : https://files.pythonhosted.org/packages/e7/86/8c95a2f43d8d66837f52fc0a2d9b4ea491e564789ee94d28f642d9d47ebc/statsmodels-0.13.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/e7/86/8c95a2f43d8d66837f52fc0a2d9b4ea491e564789ee94d28f642d9d47ebc/statsmodels-0.13.1.tar.gz
 Summary  : Statistical computations and models for Python
